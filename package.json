@@ -1,0 +1,27 @@
+{
+  "name": "x402-kit",
+  "version": "1.0.0",
+  "description": "Learnable x402 payment protocol kit for Base — exact & upto schemes",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx server/index.ts",
+    "client": "tsx client/index.ts",
+    "agent": "tsx client/agent.ts"
+  },
+  "dependencies": {
+    "@coinbase/x402": "^2.1.0",
+    "@x402/axios": "^2.9.0",
+    "@x402/core": "^2.9.0",
+    "@x402/evm": "^2.9.0",
+    "@x402/express": "^2.9.0",
+    "axios": "^1.7.0",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0",
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
