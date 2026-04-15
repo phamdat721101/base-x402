@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import { network, isMainnet } from "./facilitator.js";
+import { banner, warn, dim, green, cyan } from "../lib/terminal.js";
 import exactRoutes from "./routes/exact.js";
 import uptoRoutes from "./routes/upto.js";
 
@@ -14,15 +15,17 @@ app.get("/health", (_req, res) => {
 });
 
 app.listen(4021, () => {
-  console.log("x402 server running on http://localhost:4021");
-  console.log(`Network: ${network} (${isMainnet ? "mainnet" : "testnet"})`);
-  console.log("Endpoints:");
-  console.log("  GET  /api/v1/price    (exact, $0.001)");
-  console.log("  GET  /api/v1/stats    (exact, $0.005)");
-  console.log(`  POST /api/v2/generate (${isMainnet ? "upto" : "exact fallback"}, max $0.10)`);
+  banner("x402 Bazaar Kit — Server", [
+    `${dim("Network:")}  ${green(network)} ${isMainnet ? "(mainnet)" : "(testnet)"}`,
+    `${dim("Bazaar:")}   ${green("enabled")} — endpoints discoverable after first payment`,
+    "",
+    `${cyan("GET")}  /api/v1/price    ${dim("exact $0.001")}`,
+    `${cyan("GET")}  /api/v1/stats    ${dim("exact $0.005")}`,
+    `${cyan("POST")} /api/v2/generate ${dim(`${isMainnet ? "upto" : "exact"} $0.10`)}`,
+    `${cyan("GET")}  /health          ${dim("free")}`,
+  ]);
   if (!isMainnet) {
-    console.log("\n⚠  upto scheme requires CDP facilitator (mainnet).");
-    console.log("   On testnet, /api/v2 uses exact as fallback.");
-    console.log("   Set NETWORK=mainnet + CDP keys to enable upto.\n");
+    console.log(`  ${warn("upto scheme requires CDP facilitator (mainnet).")}`);
+    console.log(`  ${dim("On testnet, /api/v2 uses exact as fallback.")}\n`);
   }
 });
